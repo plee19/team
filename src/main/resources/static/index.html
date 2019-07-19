@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+</head>
+<body>
+<span id="moviesList"></span>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var myObj = JSON.parse(this.responseText);
+            var content = "<table>" +
+                "<tr>" +
+                "<th>Name</th>" +
+                "<th>Year</th>" +
+                "</tr>";
+            for (var property in myObj) {
+                if (myObj.hasOwnProperty(property)) {
+                    content +=
+                        "<tr><td>" + myObj[property].name + "</td>" +
+                        "<td>" + myObj[property].year + "</td>" +
+                        "</tr>";
+                }
+            }
+            content += "</table>"
+            document.getElementById("moviesList").innerHTML = content;
+        }
+    };
+    xmlhttp.open("GET", "/movies", true);
+    xmlhttp.send();
+</script>
+</body>
+</html>
